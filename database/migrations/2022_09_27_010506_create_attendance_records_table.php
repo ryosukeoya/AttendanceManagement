@@ -23,7 +23,7 @@ return new class extends Migration {
                 ->dateTime('end_time')
                 ->nullable()
                 ->default(null);
-            $table->integer('total_minutes')->default(0);
+            $table->unsignedInteger('total_minutes')->default(0);
             $table->timestamps();
             $table
                 ->foreign('user_id')
