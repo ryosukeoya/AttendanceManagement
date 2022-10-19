@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AttendanceRecordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,12 +14,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/', function () {
+        return view('home');
+    })->name('home');
+
+    Route::resource('attendance_record', AttendanceRecordController::class)->only([
+        'index',
+        'create',
+        'edit',
+        'store',
+        'update',
+        'destroy',
+    ]);
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
