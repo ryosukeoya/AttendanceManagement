@@ -11,8 +11,11 @@
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
 
+    {{-- TDDO Refactor --}}
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
     <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js','resources/js/calendar.js'])
 </head>
 
 <body class="font-sans antialiased">
@@ -20,7 +23,7 @@
         @include('layouts.navigation')
 
         <!-- Page Content -->
-        <main class="bg-white min-h-screen w-full max-w-3xl m-auto">
+        <main class="mt-8 bg-white min-h-screen w-full max-w-3xl m-auto">
             {{ $slot }}
         </main>
     </div>

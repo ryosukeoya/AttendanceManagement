@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TopController;
 use App\Http\Controllers\AttendanceRecordController;
 
 /*
@@ -15,9 +16,7 @@ use App\Http\Controllers\AttendanceRecordController;
 */
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/', function () {
-        return view('home');
-    })->name('home');
+    Route::get('/', [TopController::class, 'index'])->name('home');
 
     Route::resource('attendance_record', AttendanceRecordController::class)->only([
         'index',
@@ -27,6 +26,10 @@ Route::middleware(['auth'])->group(function () {
         'update',
         'destroy',
     ]);
+
+    // TODO Rename
+    Route::get('api_attendance_record', [TopController::class, 'foo']
+    )->name('api_attendance_record');
 });
 
 require __DIR__ . '/auth.php';
