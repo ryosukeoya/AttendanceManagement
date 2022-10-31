@@ -24,7 +24,8 @@ return new class extends Migration {
                 ->nullable()
                 ->default(null);
             $table->unsignedInteger('total_minutes')->default(0);
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
             $table
                 ->foreign('user_id')
                 ->references('id')
