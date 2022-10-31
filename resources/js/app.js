@@ -23,11 +23,24 @@ window.onload = () => {
                 .catch((error) => {
                     console.error(error)
                 })
-            if (response.hoge) {
-                const menuItems = document.querySelectorAll('[data = menu-item]')
-                // TODO gray, menuItmes[0]
-                menuItems[0].classList.add('gray')
-                // menuItems[0].firstElementChild.href = "javascript:void(0)"
+
+            // TODO Refactor
+            if (response.attendanceStatus == 1) {
+                const workingStartMenu = document.getElementById('workingStart')
+
+                workingStartMenu.classList.add('gray')
+                workingStartMenu.classList.add('pointer_events_none')
+                workingStartMenu.firstElementChild.href = 'javascript:void(0)'
+            } else if (response.reportedStatus == 2) {
+                const workingStartMenu = document.getElementById('workingStart')
+                const workingEndMenu = document.getElementById('workingEnd')
+
+                workingStartMenu.classList.add('gray')
+                workingStartMenu.classList.add('pointer_events_none')
+                workingStartMenu.firstElementChild.href = 'javascript:void(0)'
+                workingEndMenu.classList.add('gray')
+                workingEndMenu.classList.add('pointer_events_none')
+                workingEndMenu.firstElementChild.href = 'javascript:void(0)'
             }
         }
         getRecord()
@@ -35,13 +48,3 @@ window.onload = () => {
         console.error(error)
     }
 }
-
-// TODO 場所変える
-const historyBackLink = document.getElementById('historyBackLink')
-historyBackLink.addEventListener(
-    'click',
-    function () {
-        window.history.back()
-    },
-    false
-)

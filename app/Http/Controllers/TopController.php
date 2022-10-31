@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\AttendanceRecordService;
 use App\Models\User;
-use App\Models\AttendanceRecord;
+use Carbon\Carbon;
 
 class TopController extends Controller
 {
@@ -14,11 +15,14 @@ class TopController extends Controller
         return view('home', compact('hoge'));
     }
 
-    // TODO Rename, 場所変える
-    public function foo()
+    public function getAttendanceStatusOfJson()
     {
-        $user = User::find(1);
-        $records = $user->attendanceManagement()->where('start_time', 'like', '%2022-10-24%');
-        return response()->json(['isReported' => isset($records)]);
+        $date = new Carbon();
+        $user = User::find(\Auth::id());
+
+        $attendanceRecordService = new AttendanceRecordService();
+        $attendanceStatus = $attendanceRecordService->getAttendanceStatus($user, $date);
+
+        return response()->json(['attendanceStatus' => $attendanceStatus]);
     }
 }

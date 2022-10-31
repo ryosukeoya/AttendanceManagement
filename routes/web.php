@@ -27,8 +27,7 @@ Route::middleware(['auth'])->group(function () {
         'destroy',
     ]);
 
-    // TODO Rename
-    Route::get('api_attendance_record', [TopController::class, 'foo']
+    Route::get('api_attendance_record', [TopController::class, 'getAttendanceStatusOfJson']
     )->name('api_attendance_record');
 });
 
