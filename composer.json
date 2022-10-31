@@ -53,6 +53,12 @@
         ],
         "lint": [
             "vendor/bin/phpstan analyse app"
+        ],
+        "facades": [
+            "php artisan ide-helper:generate"
+        ],
+        "model": [
+            "php artisan ide-helper:model --nowrite"
         ]
     },
     "extra": {
