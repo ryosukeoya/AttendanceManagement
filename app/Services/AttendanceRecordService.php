@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Services\DateConverter;
 use App\Models\User;
 use Carbon\Carbon;
 
@@ -33,7 +32,7 @@ class AttendanceRecordService
 
     final private function getStartedRecordCounts(User $user, Carbon $date): int
     {
-        $todayDateString = DateConverter::getTodayString($date, 'YYYY-MM-DD');
+        $todayDateString = \DateConverter::getTodayString($date, 'YYYY-MM-DD');
         $todaysDateRegex = '%' . $todayDateString . '%';
 
         $startedRecordCounts = $user
@@ -54,7 +53,7 @@ class AttendanceRecordService
 
     final private function getEndedRecordCounts(User $user, Carbon $date): int
     {
-        $todayDateString = DateConverter::getTodayString($date, 'YYYY-MM-DD');
+        $todayDateString = \DateConverter::getTodayString($date, 'YYYY-MM-DD');
         $todaysDateRegex = '%' . $todayDateString . '%';
 
         $endedRecordCounts = $user
