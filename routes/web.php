@@ -27,8 +27,9 @@ Route::middleware(['auth'])->group(function () {
         'destroy',
     ]);
 
-    Route::get('api_attendance_record', [TopController::class, 'getAttendanceStatusOfJson']
-    )->name('api_attendance_record');
+    Route::get('api_attendance_record', [TopController::class, 'getAttendanceStatusOfJson'])->name(
+        'api_attendance_record'
+    );
 });
 
 require __DIR__ . '/auth.php';
