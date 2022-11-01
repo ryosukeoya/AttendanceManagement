@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Services;
+namespace App\Utils;
 
 use Carbon\Carbon;
 
 class DateConverter
 {
+    // TODO Rename
     public static function getTodayString(Carbon $date, string $format = 'YYYY-MM-DD'): string
     {
         $todayDateString = null;
