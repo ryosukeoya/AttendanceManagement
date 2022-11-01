@@ -7,7 +7,7 @@ use Carbon\Carbon;
 
 class AttendanceRecordService
 {
-    private const RECORD_STATUS = [
+    private const ATTENDANCE_STATUS = [
         '始業済み' => 1,
         '終業済み' => 2,
     ];
@@ -19,9 +19,9 @@ class AttendanceRecordService
 
         try {
             if ($startedRecordCounts >= 1 && $endedRecordCounts >= 1) {
-                return self::RECORD_STATUS['終業済み'];
+                return self::ATTENDANCE_STATUS['終業済み'];
             } elseif ($startedRecordCounts >= 1) {
-                return self::RECORD_STATUS['始業済み'];
+                return self::ATTENDANCE_STATUS['始業済み'];
             } elseif ($endedRecordCounts >= 1) {
                 throw new \RecordException();
             }
