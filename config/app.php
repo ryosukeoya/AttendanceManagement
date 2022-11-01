@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Facade;
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -211,6 +210,7 @@ return [
     'aliases' => Facade::defaultAliases()
         ->merge([
             'RecordException' => App\Exceptions\RecordException::class,
+            'DateConverter' => App\Utils\DateConverter::class,
         ])
         ->toArray(),
 ];
