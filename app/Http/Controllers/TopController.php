@@ -10,9 +10,7 @@ class TopController extends Controller
 {
     public function index()
     {
-        // TODO hoge
-        $hoge = true;
-        return view('home', compact('hoge'));
+        return view('home');
     }
 
     public function getAttendanceStatusOfJson()
