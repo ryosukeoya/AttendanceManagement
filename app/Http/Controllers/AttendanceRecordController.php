@@ -37,7 +37,7 @@ class AttendanceRecordController extends Controller
     public function store(Request $request)
     {
         AttendanceRecord::create(['user_id' => Auth::id(), 'start_time' => $request->time]);
-        return view('home');
+        return redirect()->route('home');
     }
 
     /**
@@ -62,7 +62,7 @@ class AttendanceRecordController extends Controller
         AttendanceRecord::where('id', $id)->update([
             'end_time' => $request->end_time,
         ]);
-        return redirect();
+        return redirect()->route('home');
     }
 
     /**
@@ -74,6 +74,6 @@ class AttendanceRecordController extends Controller
     public function destroy($id)
     {
         AttendanceRecord::where('id', $id)->delete();
-        return redirect();
+        return redirect()->route('home');
     }
 }
