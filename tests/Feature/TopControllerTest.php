@@ -12,11 +12,11 @@ class TopControllerTest extends TestCase
     use DatabaseMigrations;
 
     /**
-     * 報告・未報告の判定が正しいか
+     * 勤務ステータスの判定が正しいか
      *
      * @return void
      */
-    public function test_reported()
+    public function test_api_attendance_record()
     {
         $this->seed();
 
