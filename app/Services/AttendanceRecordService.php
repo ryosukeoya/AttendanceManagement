@@ -7,6 +7,7 @@ use Carbon\Carbon;
 
 class AttendanceRecordService
 {
+    // TODO Refactor
     private const ATTENDANCE_STATUS = [
         '未登録' => 0,
         '始業済み' => 1,
@@ -23,7 +24,7 @@ class AttendanceRecordService
         return $attendanceStatus;
     }
 
-    final private function assignAttendanceStatus(int $startedRecordCounts, int $endedRecordCounts): int
+    private function assignAttendanceStatus(int $startedRecordCounts, int $endedRecordCounts): int
     {
         try {
             if ($startedRecordCounts == 0 && $endedRecordCounts == 0) {
@@ -41,7 +42,7 @@ class AttendanceRecordService
         }
     }
 
-    final private function getTodayStartedRecordCounts(User $user, Carbon $date): int
+    private function getTodayStartedRecordCounts(User $user, Carbon $date): int
     {
         $todayDateString = \DateConverter::getTodayString($date, 'YYYY-MM-DD');
         $todaysDateRegex = '%' . $todayDateString . '%';
@@ -63,7 +64,7 @@ class AttendanceRecordService
         return $startedRecordCounts;
     }
 
-    final private function getTodayEndedRecordCounts(User $user, Carbon $date): int
+    private function getTodayEndedRecordCounts(User $user, Carbon $date): int
     {
         $todayDateString = \DateConverter::getTodayString($date, 'YYYY-MM-DD');
         $todaysDateRegex = '%' . $todayDateString . '%';
