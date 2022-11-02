@@ -21,23 +21,19 @@ window.onload = () => {
                     return res.json()
                 })
                 .then((result) => {
-
                     // TODO Refactor
                     if (result.attendanceStatus == 1) {
                         const workingStartMenu = document.getElementById('workingStart')
 
-                        workingStartMenu.classList.add('gray')
-                        workingStartMenu.classList.add('pointer_events_none')
+                        workingStartMenu.classList.add('unselectable_menu')
                         workingStartMenu.firstElementChild.href = 'javascript:void(0)'
                     } else if (result.attendanceStatus == 2) {
                         const workingStartMenu = document.getElementById('workingStart')
                         const workingEndMenu = document.getElementById('workingEnd')
 
-                        workingStartMenu.classList.add('gray')
-                        workingStartMenu.classList.add('pointer_events_none')
+                        workingStartMenu.classList.add('unselectable_menu')
                         workingStartMenu.firstElementChild.href = 'javascript:void(0)'
-                        workingEndMenu.classList.add('gray')
-                        workingEndMenu.classList.add('pointer_events_none')
+                        workingStartMenu.classList.add('unselectable_menu')
                         workingEndMenu.firstElementChild.href = 'javascript:void(0)'
                     }
                     return result
