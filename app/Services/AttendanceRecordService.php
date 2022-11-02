@@ -14,10 +14,10 @@ class AttendanceRecordService
         '不正登録' => 3,
     ];
 
-    final public function getAttendanceStatus(User $user, Carbon $date): int
+    final public function getAttendanceStatus(User $user): int
     {
-        $startedRecordCounts = $this->getTodayStartedRecordCounts($user, $date);
-        $endedRecordCounts = $this->getTodayEndedRecordCounts($user, $date);
+        $startedRecordCounts = $this->getTodayStartedRecordCounts($user);
+        $endedRecordCounts = $this->getTodayEndedRecordCounts($user);
 
         $attendanceStatus = $this->assignAttendanceStatus($startedRecordCounts, $endedRecordCounts);
         return $attendanceStatus;
@@ -41,9 +41,9 @@ class AttendanceRecordService
         }
     }
 
-    private function getTodayStartedRecordCounts(User $user, Carbon $date): int
+    private function getTodayStartedRecordCounts(User $user): int
     {
-        $todayDateString = \DateConverter::getTodayString($date, 'YYYY-MM-DD');
+        $todayDateString = getTodayString('YYYY-MM-DD');
         $todaysDateRegex = '%' . $todayDateString . '%';
 
         // N + 1
@@ -65,9 +65,9 @@ class AttendanceRecordService
         return $startedRecordCounts;
     }
 
-    private function getTodayEndedRecordCounts(User $user, Carbon $date): int
+    private function getTodayEndedRecordCounts(User $user): int
     {
-        $todayDateString = \DateConverter::getTodayString($date, 'YYYY-MM-DD');
+        $todayDateString = getTodayString('YYYY-MM-DD');
         $todaysDateRegex = '%' . $todayDateString . '%';
 
         $endedRecordCounts = $user
