@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    a {
+        cursor: pointer;
+    }
+}
+
 @layer components {
     .unselectable_menu {
         @apply bg-gray-300 pointer-events-none;
