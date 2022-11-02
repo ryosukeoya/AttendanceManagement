@@ -7,7 +7,6 @@ use Carbon\Carbon;
 
 class AttendanceRecordService
 {
-    // TODO Refactor
     private const ATTENDANCE_STATUS = [
         '未登録' => 0,
         '始業済み' => 1,
@@ -47,6 +46,7 @@ class AttendanceRecordService
         $todayDateString = \DateConverter::getTodayString($date, 'YYYY-MM-DD');
         $todaysDateRegex = '%' . $todayDateString . '%';
 
+        // N + 1
         $startedRecordCounts = $user
             ->attendanceRecords()
             ->where('start_time', 'like', $todaysDateRegex)
@@ -57,6 +57,7 @@ class AttendanceRecordService
                 throw new \RecordException('today started record 1 than many');
             }
         } catch (\RecordException $e) {
+            // debug情報ID
             \Log::error('STARTED_RECORD  : ', $e->getMessage());
             return $startedRecordCounts;
         }
