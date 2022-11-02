@@ -60,8 +60,8 @@ class AttendanceRecordController extends Controller
      */
     public function update(Request $request, int $id)
     {
-        // TODO first
         AttendanceRecord::where('id', $id)
+            ->latest()
             ->first()
             ->update([
                 'end_time' => $request->time,
