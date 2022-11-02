@@ -11,6 +11,6 @@
             <input type="time" name="time" class="block mb-4">
             <x-primary-button>送信</x-primary-button>
         </form>
-        <x-historyBackLink />
+        <x-backLink />
     </x-primary-wrapper>
 </x-app-layout>
