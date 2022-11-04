@@ -22,6 +22,20 @@ class AttendanceRecordService
         return $attendanceStatus;
     }
 
+    final public static function getTodayStartedRecord(User $user): mixed
+    {
+        $todayDateString = getTodayString('YYYY-MM-DD');
+        $todayDateRegex = '%' . $todayDateString . '%';
+
+        $todayStartedRecord = $user
+            ->attendanceRecords()
+            ->where('start_time', 'like', $todayDateRegex)
+            ->latest()
+            ->first();
+
+        return $todayStartedRecord;
+    }
+
     private function assignAttendanceStatus(int $todayStartedRecordCounts, int $todayEndedRecordCounts): int
     {
         try {
