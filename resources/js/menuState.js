@@ -25,7 +25,7 @@ window.onload = () => {
 
                         workingStartMenu.classList.add('unselectable_menu')
                         workingStartMenu.firstElementChild.href = 'javascript:void(0)'
-                        workingStartMenu.classList.add('unselectable_menu')
+                        workingEndMenu.classList.add('unselectable_menu')
                         workingEndMenu.firstElementChild.href = 'javascript:void(0)'
                     }
                     return result
