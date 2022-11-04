@@ -210,6 +210,7 @@ return [
     'aliases' => Facade::defaultAliases()
         ->merge([
             'RecordException' => App\Exceptions\RecordException::class,
+            'DateHelperException' => App\Exceptions\DateHelperException::class,
             'DateConverter' => App\Utils\DateConverter::class,
         ])
         ->toArray(),

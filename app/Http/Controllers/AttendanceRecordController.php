@@ -36,7 +36,6 @@ class AttendanceRecordController extends Controller
      */
     public function store(Request $request)
     {
-        // TODO time
         AttendanceRecord::create(['user_id' => Auth::id(), 'start_time' => $request->time]);
         return redirect()->route('home');
     }

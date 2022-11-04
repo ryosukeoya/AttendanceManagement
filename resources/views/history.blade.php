@@ -1,6 +1,6 @@
 <x-app-layout>
-    <x-primary-wrapper>
+    <x-primary-content-wrapper>
         <div id='calendar'></div>
         <x-backLink />
-    </x-primary-wrapper>
+    </x-primary-content-wrapper>
 </x-app-layout>
