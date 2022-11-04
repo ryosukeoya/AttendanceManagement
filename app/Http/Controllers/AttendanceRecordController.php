@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 use App\Services\AttendanceRecordService;
 use App\Models\AttendanceRecord;
 
@@ -21,22 +22,34 @@ class AttendanceRecordController extends Controller
 
     /**
      * Display the start page
-     * 
+     *
      * @return \Illuminate\Http\Response
      */
     public function start()
     {
-        return view('start');
+        // TODO Refactor
+        $date = new Carbon();
+        $hour = $date->hour;
+        $minute = $date->minute;
+        $maxTime = $hour . ':' . $minute;
+
+        return view('start', ['maxTime' => $maxTime]);
     }
 
     /**
-     * Display the end page 
-     * 
+     * Display the end page
+     *
      * @return \Illuminate\Http\Response
      */
     public function end()
     {
-        return view('end');
+        // TODO Refactor
+        $date = new Carbon();
+        $hour = $date->hour;
+        $minute = $date->minute;
+        $maxTime = $hour . ':' . $minute;
+
+        return view('end', ['maxTime' => $maxTime]);
     }
 
     /**
