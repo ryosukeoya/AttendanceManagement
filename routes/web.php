@@ -16,17 +16,23 @@ use App\Http\Controllers\AttendanceRecordController;
 */
 
 Route::middleware(['auth'])->group(function () {
+    // TOP
     Route::get('/', [TopController::class, 'index'])->name('home');
 
+    // Attendance Record
     Route::resource('attendance_record', AttendanceRecordController::class)->only([
         'index',
-        'create',
         'edit',
         'store',
-        'update',
         'destroy',
     ]);
+    Route::get('attendance_record/start', [AttendanceRecordController::class, 'start'])->name('attendance_record.start');
+    Route::get('attendance_record/end', [AttendanceRecordController::class, 'end'])->name('attendance_record.end');
+    Route::patch('attendance_record/update', [AttendanceRecordController::class, 'update'])->name(
+        'attendance_record.update'
+    );
 
+    // API
     Route::get('api_attendance_record', [TopController::class, 'getAttendanceStatusOfJson'])->name(
         'api_attendance_record'
     );

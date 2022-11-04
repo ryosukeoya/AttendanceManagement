@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Services\AttendanceRecordService;
 use App\Models\AttendanceRecord;
 
 class AttendanceRecordController extends Controller
@@ -19,13 +20,23 @@ class AttendanceRecordController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
+     * Display the start page
+     * 
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function start()
     {
         return view('start');
+    }
+
+    /**
+     * Display the end page 
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function end()
+    {
+        return view('end');
     }
 
     /**
@@ -36,6 +47,7 @@ class AttendanceRecordController extends Controller
      */
     public function store(Request $request)
     {
+        // TODO ないなら
         AttendanceRecord::create(['user_id' => Auth::id(), 'start_time' => $request->time]);
         return redirect()->route('home');
     }
@@ -51,20 +63,19 @@ class AttendanceRecordController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Updates the record of the most recent start of the day in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, int $id)
+    public function update(Request $request)
     {
-        AttendanceRecord::where('id', $id)
-            ->latest()
-            ->first()
-            ->update([
-                'end_time' => $request->time,
-            ]);
+        // TODO 前の時間に登録できる
+        $user = \Auth::user();
+
+        AttendanceRecordService::getTodayStartedRecord($user)->update([
+            'end_time' => $request->time,
+        ]);
         return redirect()->route('home');
     }
 
