@@ -36,7 +36,7 @@ class AttendanceRecordService
         return $todayStartedRecord;
     }
 
-    private function assignAttendanceStatus(int $todayStartedRecordCounts, int $todayEndedRecordCounts): int
+    private static function assignAttendanceStatus(int $todayStartedRecordCounts, int $todayEndedRecordCounts): int
     {
         try {
             if ($todayStartedRecordCounts == 0 && $todayEndedRecordCounts == 0) {
@@ -54,7 +54,7 @@ class AttendanceRecordService
         }
     }
 
-    private function getTodayStartedRecordCounts(User $user): int
+    private static function getTodayStartedRecordCounts(User $user): int
     {
         $todayDateString = getTodayString('YYYY-MM-DD');
         $todayDateRegex = '%' . $todayDateString . '%';
@@ -77,7 +77,7 @@ class AttendanceRecordService
         return $todayStartedRecordCounts;
     }
 
-    private function getTodayEndedRecordCounts(User $user): int
+    private static function getTodayEndedRecordCounts(User $user): int
     {
         $todayDateString = getTodayString('YYYY-MM-DD');
         $todayDateRegex = '%' . $todayDateString . '%';
