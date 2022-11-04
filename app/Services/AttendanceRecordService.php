@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\User;
-use Carbon\Carbon;
 
 class AttendanceRecordService
 {
@@ -16,23 +15,23 @@ class AttendanceRecordService
 
     final public function getAttendanceStatus(User $user): int
     {
-        $startedRecordCounts = $this->getTodayStartedRecordCounts($user);
-        $endedRecordCounts = $this->getTodayEndedRecordCounts($user);
+        $todayStartedRecordCounts = $this->getTodayStartedRecordCounts($user);
+        $todayEndedRecordCounts = $this->getTodayEndedRecordCounts($user);
 
-        $attendanceStatus = $this->assignAttendanceStatus($startedRecordCounts, $endedRecordCounts);
+        $attendanceStatus = $this->assignAttendanceStatus($todayStartedRecordCounts, $todayEndedRecordCounts);
         return $attendanceStatus;
     }
 
-    private function assignAttendanceStatus(int $startedRecordCounts, int $endedRecordCounts): int
+    private function assignAttendanceStatus(int $todayStartedRecordCounts, int $todayEndedRecordCounts): int
     {
         try {
-            if ($startedRecordCounts == 0 && $endedRecordCounts == 0) {
+            if ($todayStartedRecordCounts == 0 && $todayEndedRecordCounts == 0) {
                 return self::ATTENDANCE_STATUS['未登録'];
-            } elseif ($startedRecordCounts >= 1 && $endedRecordCounts == 0) {
+            } elseif ($todayStartedRecordCounts >= 1 && $todayEndedRecordCounts == 0) {
                 return self::ATTENDANCE_STATUS['始業済み'];
-            } elseif ($startedRecordCounts == 0 && $endedRecordCounts >= 1) {
+            } elseif ($todayStartedRecordCounts == 0 && $todayEndedRecordCounts >= 1) {
                 throw new \RecordException('未始業かつ終業済み登録');
-            } elseif ($startedRecordCounts >= 1 && $endedRecordCounts >= 1) {
+            } elseif ($todayStartedRecordCounts >= 1 && $todayEndedRecordCounts >= 1) {
                 return self::ATTENDANCE_STATUS['終業済み'];
             }
         } catch (\RecordException $e) {
@@ -46,23 +45,22 @@ class AttendanceRecordService
         $todayDateString = getTodayString('YYYY-MM-DD');
         $todaysDateRegex = '%' . $todayDateString . '%';
 
-        // N + 1
-        $startedRecordCounts = $user
+        $todayStartedRecordCounts = $user
             ->attendanceRecords()
             ->where('start_time', 'like', $todaysDateRegex)
             ->count();
 
         try {
-            if ($startedRecordCounts > 1) {
+            if ($todayStartedRecordCounts > 1) {
                 throw new \RecordException('today started record 1 than many');
             }
         } catch (\RecordException $e) {
             // debug情報ID
             \Log::error('STARTED_RECORD  : ', $e->getMessage());
-            return $startedRecordCounts;
+            return $todayStartedRecordCounts;
         }
 
-        return $startedRecordCounts;
+        return $todayStartedRecordCounts;
     }
 
     private function getTodayEndedRecordCounts(User $user): int
@@ -70,20 +68,20 @@ class AttendanceRecordService
         $todayDateString = getTodayString('YYYY-MM-DD');
         $todaysDateRegex = '%' . $todayDateString . '%';
 
-        $endedRecordCounts = $user
+        $todayEndedRecordCounts = $user
             ->attendanceRecords()
             ->where('end_time', 'like', $todaysDateRegex)
             ->count();
 
         try {
-            if ($endedRecordCounts > 1) {
+            if ($todayEndedRecordCounts > 1) {
                 throw new \RecordException('today ended record 1 than many');
             }
         } catch (\RecordException $e) {
             \Log::error('ENDED_RECORD : ', $e->getMessage());
-            return $endedRecordCounts;
+            return $todayEndedRecordCounts;
         }
 
-        return $endedRecordCounts;
+        return $todayEndedRecordCounts;
     }
 }
