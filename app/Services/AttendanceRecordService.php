@@ -43,11 +43,11 @@ class AttendanceRecordService
     private function getTodayStartedRecordCounts(User $user): int
     {
         $todayDateString = getTodayString('YYYY-MM-DD');
-        $todaysDateRegex = '%' . $todayDateString . '%';
+        $todayDateRegex = '%' . $todayDateString . '%';
 
         $todayStartedRecordCounts = $user
             ->attendanceRecords()
-            ->where('start_time', 'like', $todaysDateRegex)
+            ->where('start_time', 'like', $todayDateRegex)
             ->count();
 
         try {
@@ -66,11 +66,11 @@ class AttendanceRecordService
     private function getTodayEndedRecordCounts(User $user): int
     {
         $todayDateString = getTodayString('YYYY-MM-DD');
-        $todaysDateRegex = '%' . $todayDateString . '%';
+        $todayDateRegex = '%' . $todayDateString . '%';
 
         $todayEndedRecordCounts = $user
             ->attendanceRecords()
-            ->where('end_time', 'like', $todaysDateRegex)
+            ->where('end_time', 'like', $todayDateRegex)
             ->count();
 
         try {
