@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use App\Http\Requests\AttendanceRecordRequest;
 use App\Services\AttendanceRecordService;
 use App\Models\AttendanceRecord;
 
@@ -58,7 +59,7 @@ class AttendanceRecordController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AttendanceRecordRequest $request)
     {
         // TODO ないなら
         AttendanceRecord::create(['user_id' => Auth::id(), 'start_time' => $request->time]);
