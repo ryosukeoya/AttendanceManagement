@@ -8,6 +8,9 @@
         @csrf
 
         <input type="time" required name="time" class="block mb-4">
+        @error('time')
+        <p class="text-red-500">{{ $message }}</p>
+        @enderror
         <x-primary-button>送信</x-primary-button>
     </form>
 </div>
