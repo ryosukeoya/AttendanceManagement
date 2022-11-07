@@ -28,13 +28,7 @@ class AttendanceRecordController extends Controller
      */
     public function start()
     {
-        // TODO Refactor
-        $date = new Carbon();
-        $hour = $date->hour;
-        $minute = $date->minute;
-        $maxTime = $hour . ':' . $minute;
-
-        return view('start', ['maxTime' => $maxTime]);
+        return view('start');
     }
 
     /**
@@ -44,13 +38,7 @@ class AttendanceRecordController extends Controller
      */
     public function end()
     {
-        // TODO Refactor
-        $date = new Carbon();
-        $hour = $date->hour;
-        $minute = $date->minute;
-        $maxTime = $hour . ':' . $minute;
-
-        return view('end', ['maxTime' => $maxTime]);
+        return view('end');
     }
 
     /**

@@ -7,7 +7,7 @@
         @method($method)
         @csrf
 
-        <input type="time" required max="{{$maxTime}}" name="time" class="block mb-4">
+        <input type="time" required name="time" class="block mb-4">
         <x-primary-button>送信</x-primary-button>
     </form>
 </div>
