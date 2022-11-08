@@ -7,8 +7,6 @@ use Carbon\Carbon;
 
 class AttendanceRecordRequest extends FormRequest
 {
-    protected $redirectRoute = 'attendance_record.start';
-
     /**
      * Determine if the user is authorized to make this request.
      *

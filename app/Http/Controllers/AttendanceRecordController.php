@@ -70,7 +70,7 @@ class AttendanceRecordController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(AttendanceRecordRequest $request)
     {
         $user = \Auth::user();
 
