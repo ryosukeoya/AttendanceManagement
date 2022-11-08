@@ -91,6 +91,7 @@ class AttendanceRecordController extends Controller
      */
     public function update(AttendanceRecordRequest $request)
     {
+        // TODO 開始時刻より後なら
         $user = \Auth::user();
 
         AttendanceRecordService::getTodayStartedRecord($user)->update([
