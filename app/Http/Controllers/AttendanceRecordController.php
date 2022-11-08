@@ -28,7 +28,16 @@ class AttendanceRecordController extends Controller
      */
     public function start()
     {
-        return view('start');
+        $user = Auth::user();
+
+        $attendanceRecordService = new AttendanceRecordService();
+        $attendanceStatus = $attendanceRecordService->getAttendanceStatus($user);
+        // TODO Refactor
+        if ($attendanceStatus == 0) {
+            return view('start');
+        } else {
+            return view('started');
+        }
     }
 
     /**
@@ -38,7 +47,16 @@ class AttendanceRecordController extends Controller
      */
     public function end()
     {
-        return view('end');
+        $user = Auth::user();
+
+        $attendanceRecordService = new AttendanceRecordService();
+        $attendanceStatus = $attendanceRecordService->getAttendanceStatus($user);
+        // TODO Refactor
+        if ($attendanceStatus == 1) {
+            return view('end');
+        } else {
+            return view('ended');
+        }
     }
 
     /**
