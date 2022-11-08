@@ -16,11 +16,11 @@ class AttendanceRecordService
     ];
     private const ATTENDANCE_STATUS3 = [
         'key' => '終業済み',
-        'value' => 3,
+        'value' => 2,
     ];
     private const ATTENDANCE_STATUS4 = [
         'key' => '不正登録',
-        'value' => 4,
+        'value' => 3,
     ];
 
     final public static function canStartRegister(int $attendanceStatus): bool
