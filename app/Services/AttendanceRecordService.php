@@ -6,12 +6,23 @@ use App\Models\User;
 
 class AttendanceRecordService
 {
+    // TODO Refactor key,value
     private const ATTENDANCE_STATUS = [
         '未登録' => 0,
         '始業済み' => 1,
         '終業済み' => 2,
         '不正登録' => 3,
     ];
+
+    final public static function canStartRegister(int $attendanceStatus)
+    {
+        return $attendanceStatus == self::ATTENDANCE_STATUS['未登録'];
+    }
+
+    final public static function canEndRegister(int $attendanceStatus)
+    {
+        return $attendanceStatus == self::ATTENDANCE_STATUS['終業済み'];
+    }
 
     final public function getAttendanceStatus(User $user): int
     {

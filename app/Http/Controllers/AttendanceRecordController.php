@@ -32,8 +32,8 @@ class AttendanceRecordController extends Controller
 
         $attendanceRecordService = new AttendanceRecordService();
         $attendanceStatus = $attendanceRecordService->getAttendanceStatus($user);
-        // TODO Refactor
-        if ($attendanceStatus == 0) {
+
+        if ($attendanceRecordService->canStartRegister($attendanceStatus)) {
             return view('start');
         } else {
             return view('started');
@@ -51,8 +51,8 @@ class AttendanceRecordController extends Controller
 
         $attendanceRecordService = new AttendanceRecordService();
         $attendanceStatus = $attendanceRecordService->getAttendanceStatus($user);
-        // TODO Refactor
-        if ($attendanceStatus == 1) {
+
+        if ($attendanceRecordService->canEndRegister($attendanceStatus)) {
             return view('end');
         } else {
             return view('ended');
