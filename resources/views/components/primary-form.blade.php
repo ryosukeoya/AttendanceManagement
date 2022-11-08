@@ -1,4 +1,4 @@
-@props(['headingTitle','action','method' => 'POST', 'maxTime'])
+@props(['headingTitle','action','method' => 'POST'])
 
 <div class="flex flex-col justify-end max-w-5xl m-auto">
     <h1 class="text-xl pb-4">{{$headingTitle}}</h1>
