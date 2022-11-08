@@ -6,22 +6,31 @@ use App\Models\User;
 
 class AttendanceRecordService
 {
-    // TODO Refactor key,value
-    private const ATTENDANCE_STATUS = [
-        '未登録' => 0,
-        '始業済み' => 1,
-        '終業済み' => 2,
-        '不正登録' => 3,
+    private const ATTENDANCE_STATUS1 = [
+        'key' => '未登録',
+        'value' => 0,
+    ];
+    private const ATTENDANCE_STATUS2 = [
+        'key' => '始業済み',
+        'value' => 1,
+    ];
+    private const ATTENDANCE_STATUS3 = [
+        'key' => '終業済み',
+        'value' => 3,
+    ];
+    private const ATTENDANCE_STATUS4 = [
+        'key' => '不正登録',
+        'value' => 4,
     ];
 
-    final public static function canStartRegister(int $attendanceStatus)
+    final public static function canStartRegister(int $attendanceStatus): bool
     {
-        return $attendanceStatus == self::ATTENDANCE_STATUS['未登録'];
+        return $attendanceStatus == self::ATTENDANCE_STATUS1['value'];
     }
 
-    final public static function canEndRegister(int $attendanceStatus)
+    final public static function canEndRegister(int $attendanceStatus): bool
     {
-        return $attendanceStatus == self::ATTENDANCE_STATUS['終業済み'];
+        return $attendanceStatus == self::ATTENDANCE_STATUS2['value'];
     }
 
     final public function getAttendanceStatus(User $user): int
@@ -51,17 +60,17 @@ class AttendanceRecordService
     {
         try {
             if ($todayStartedRecordCounts == 0 && $todayEndedRecordCounts == 0) {
-                return self::ATTENDANCE_STATUS['未登録'];
+                return self::ATTENDANCE_STATUS1['value'];
             } elseif ($todayStartedRecordCounts >= 1 && $todayEndedRecordCounts == 0) {
-                return self::ATTENDANCE_STATUS['始業済み'];
+                return self::ATTENDANCE_STATUS2['value'];
             } elseif ($todayStartedRecordCounts == 0 && $todayEndedRecordCounts >= 1) {
                 throw new \RecordException('未始業かつ終業済み登録');
             } elseif ($todayStartedRecordCounts >= 1 && $todayEndedRecordCounts >= 1) {
-                return self::ATTENDANCE_STATUS['終業済み'];
+                return self::ATTENDANCE_STATUS3['value'];
             }
         } catch (\RecordException $e) {
             \Log::error('ABNORMAL_RECORD : ', $e->getMessage());
-            return self::ATTENDANCE_STATUS['不正登録'];
+            return self::ATTENDANCE_STATUS4['value'];
         }
     }
 
