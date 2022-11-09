@@ -69,7 +69,7 @@ class AttendanceRecordService
                 return self::ATTENDANCE_STATUS3['value'];
             }
         } catch (\RecordException $e) {
-            \Log::error('ABNORMAL_RECORD : ', $e->getMessage());
+            \Log::error('ABNORMAL_RECORD : ' . $e->getMessage());
             return self::ATTENDANCE_STATUS4['value'];
         }
     }
@@ -90,7 +90,7 @@ class AttendanceRecordService
             }
         } catch (\RecordException $e) {
             // debug情報ID
-            \Log::error('STARTED_RECORD  : ', $e->getMessage());
+            \Log::error('STARTED_RECORD  : ' . $e->getMessage());
             return $todayStartedRecordCounts;
         }
 
@@ -112,7 +112,7 @@ class AttendanceRecordService
                 throw new \RecordException('today ended record 1 than many');
             }
         } catch (\RecordException $e) {
-            \Log::error('ENDED_RECORD : ', $e->getMessage());
+            \Log::error('ENDED_RECORD : ' . $e->getMessage());
             return $todayEndedRecordCounts;
         }
 
