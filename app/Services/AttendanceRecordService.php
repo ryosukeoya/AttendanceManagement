@@ -89,8 +89,10 @@ class AttendanceRecordService
                 throw new \RecordException('today started record 1 than many');
             }
         } catch (\RecordException $e) {
-            // debug情報ID
-            \Log::error('STARTED_RECORD  : ' . $e->getMessage());
+            \Log::error('STARTED_RECORD : ' . $e->getMessage(), [
+                'user_id' => $user->id,
+                'record_counts' => $todayStartedRecordCounts,
+            ]);
             return $todayStartedRecordCounts;
         }
 
@@ -112,7 +114,10 @@ class AttendanceRecordService
                 throw new \RecordException('today ended record 1 than many');
             }
         } catch (\RecordException $e) {
-            \Log::error('ENDED_RECORD : ' . $e->getMessage());
+            \Log::error('ENDED_RECORD : ' . $e->getMessage(), [
+                'user_id' => $user->id,
+                'record_counts' => $todayEndedRecordCounts,
+            ]);
             return $todayEndedRecordCounts;
         }
 
