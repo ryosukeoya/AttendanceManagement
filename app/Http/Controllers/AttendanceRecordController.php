@@ -33,11 +33,11 @@ class AttendanceRecordController extends Controller
         $attendanceRecordService = new AttendanceRecordService();
         $attendanceStatus = $attendanceRecordService->getAttendanceStatus($user);
 
-        if ($attendanceRecordService->canStartRegister($attendanceStatus)) {
-            return view('start');
-        } else {
+        if (!$attendanceRecordService->canStartRegister($attendanceStatus)) {
             return view('started');
         }
+
+        return view('start');
     }
 
     /**
@@ -52,11 +52,11 @@ class AttendanceRecordController extends Controller
         $attendanceRecordService = new AttendanceRecordService();
         $attendanceStatus = $attendanceRecordService->getAttendanceStatus($user);
 
-        if ($attendanceRecordService->canEndRegister($attendanceStatus)) {
-            return view('end');
-        } else {
+        if (!$attendanceRecordService->canEndRegister($attendanceStatus)) {
             return view('ended');
         }
+
+        return view('end');
     }
 
     /**
