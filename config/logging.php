@@ -5,7 +5,6 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Default Log Channel
@@ -53,21 +52,27 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'channels' => ['daily'],
             'ignore_exceptions' => false,
         ],
 
         'single' => [
             'driver' => 'single',
-            'path' => storage_path('logs/laravel.log'),
+            'path' => storage_path(
+                sprintf('logs/%s/%s', env('APP_ENV'), app()->runningInConsole() ? 'console.log' : 'laravel.log')
+            ),
             'level' => env('LOG_LEVEL', 'debug'),
+            'permission' => 0766,
         ],
 
         'daily' => [
             'driver' => 'daily',
-            'path' => storage_path('logs/laravel.log'),
-            'level' => env('LOG_LEVEL', 'debug'),
-            'days' => 14,
+            'path' => storage_path(
+                sprintf('logs/%s/%s', env('APP_ENV'), app()->runningInConsole() ? 'console.log' : 'laravel.log')
+            ),
+            'level' => 'debug',
+            'days' => 365,
+            'permission' => 0766,
         ],
 
         'slack' => [
@@ -85,7 +90,7 @@ return [
             'handler_with' => [
                 'host' => env('PAPERTRAIL_URL'),
                 'port' => env('PAPERTRAIL_PORT'),
-                'connectionString' => 'tls://'.env('PAPERTRAIL_URL').':'.env('PAPERTRAIL_PORT'),
+                'connectionString' => 'tls://' . env('PAPERTRAIL_URL') . ':' . env('PAPERTRAIL_PORT'),
             ],
         ],
 
@@ -118,5 +123,4 @@ return [
             'path' => storage_path('logs/laravel.log'),
         ],
     ],
-
 ];
