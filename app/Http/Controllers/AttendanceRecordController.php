@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
 use App\Http\Requests\AttendanceRecordRequest;
 use App\Services\AttendanceRecordService;
 use App\Models\AttendanceRecord;
@@ -91,10 +91,18 @@ class AttendanceRecordController extends Controller
      */
     public function update(AttendanceRecordRequest $request)
     {
-        // TODO 開始時刻より後なら
         $user = \Auth::user();
 
-        AttendanceRecordService::getTodayStartedRecord($user)->update([
+        $todayStartedRecord = AttendanceRecordService::getTodayStartedRecord($user);
+        $endTime = new Carbon($request->time);
+
+        if ($endTime <= $todayStartedRecord->start_time) {
+            \Log::error('終了時刻が開始時刻以前の値で登録されています : ', [
+                'user_id' => $user->id,
+            ]);
+        }
+
+        $todayStartedRecord->update([
             'end_time' => $request->time,
         ]);
         return redirect()->route('home');
