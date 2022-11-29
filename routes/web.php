@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TopController;
 use App\Http\Controllers\AttendanceRecordController;
+use App\Http\Middleware\AssignRequestId;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +18,7 @@ use App\Http\Controllers\AttendanceRecordController;
 
 Route::middleware(['auth'])->group(function () {
     // TOP
-    Route::get('/', [TopController::class, 'index'])->name('home');
+    Route::get('/', [TopController::class, 'index'])->name('home')->middleware(AssignRequestId::class);
 
     // Attendance Record
     Route::resource('attendance_record', AttendanceRecordController::class)->only([
