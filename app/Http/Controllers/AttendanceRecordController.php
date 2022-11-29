@@ -56,7 +56,10 @@ class AttendanceRecordController extends Controller
             return view('ended');
         }
 
-        return view('end');
+        $todayStartedRecord = $attendanceRecordService->getTodayStartedRecord($user);
+        $startTimeStr = $todayStartedRecord->start_time->toTimeString();
+
+        return view('end', ['startTime' => $startTimeStr]);
     }
 
     /**
