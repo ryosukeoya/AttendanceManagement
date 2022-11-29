@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\AttendanceRecord;
 use App\Models\User;
 
 class AttendanceRecordService
@@ -42,7 +43,7 @@ class AttendanceRecordService
         return $attendanceStatus;
     }
 
-    final public static function getTodayStartedRecord(User $user): mixed
+    final public static function getTodayStartedRecord(User $user): AttendanceRecord
     {
         $todayDateString = getTodayString('YYYY-MM-DD');
         $todayDateRegex = '%' . $todayDateString . '%';
