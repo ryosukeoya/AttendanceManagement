@@ -14,7 +14,12 @@ window.onload = () => {
                     return res.json()
                 })
                 .then((result) => {
-                    if (result.attendanceStatus == 1) {
+                    if (result.attendanceStatus == 0) {
+                        const workingEndMenu = document.getElementById('workingEnd')
+
+                        workingEndMenu.classList.add('unselectable_menu')
+                        workingEndMenu.firstElementChild.href = 'javascript:void(0)'
+                    } else if (result.attendanceStatus == 1) {
                         const workingStartMenu = document.getElementById('workingStart')
 
                         workingStartMenu.classList.add('unselectable_menu')
