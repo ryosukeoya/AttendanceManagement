@@ -7,12 +7,12 @@ use App\Models\User;
 
 class AttendanceRecordService
 {
-    final public static function canStartRegister(int $attendanceStatus): bool
+    final public static function canRegisterToStartWork(int $attendanceStatus): bool
     {
         return $attendanceStatus == \AttendanceStatusConst::LIST['UNREGISTERED']['STATUS'];
     }
 
-    final public static function canEndRegister(int $attendanceStatus): bool
+    final public static function canRegisterForEndOfWork(int $attendanceStatus): bool
     {
         return $attendanceStatus == \AttendanceStatusConst::LIST['STARTED']['STATUS'];
     }
