@@ -27,7 +27,7 @@ class TopControllerTest extends TestCase
         $res = $this->actingAs($attendanceUnregisteredUser)->get(route('api_attendance_record'));
         $res->assertOk()
             ->assertJsonCount(1)
-            ->assertJsonFragment(['attendanceStatus' => 0]);
+            ->assertJsonFragment(['attendanceStatus' => \AttendanceStatusConst::LIST['UNREGISTERED']['STATUS']]);
     }
 
     /**
@@ -43,7 +43,7 @@ class TopControllerTest extends TestCase
         $res = $this->actingAs($startedUser)->get(route('api_attendance_record'));
         $res->assertOk()
             ->assertJsonCount(1)
-            ->assertJsonFragment(['attendanceStatus' => 1]);
+            ->assertJsonFragment(['attendanceStatus' => \AttendanceStatusConst::LIST['STARTED']['STATUS']]);
     }
 
     /**
@@ -59,7 +59,7 @@ class TopControllerTest extends TestCase
         $res = $this->actingAs($endedUser)->get(route('api_attendance_record'));
         $res->assertOk()
             ->assertJsonCount(1)
-            ->assertJsonFragment(['attendanceStatus' => 2]);
+            ->assertJsonFragment(['attendanceStatus' => \AttendanceStatusConst::LIST['ENDED']['STATUS']]);
     }
 
     /**
@@ -75,6 +75,6 @@ class TopControllerTest extends TestCase
         $res = $this->actingAs($closingReportOnlyUser)->get(route('api_attendance_record'));
         $res->assertOk()
             ->assertJsonCount(1)
-            ->assertJsonFragment(['attendanceStatus' => 3]);
+            ->assertJsonFragment(['attendanceStatus' => \AttendanceStatusConst::LIST['ILLEGAL']['STATUS']]);
     }
 }

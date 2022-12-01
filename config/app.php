@@ -212,6 +212,7 @@ return [
             'RecordException' => App\Exceptions\RecordException::class,
             'DateHelperException' => App\Exceptions\DateHelperException::class,
             'DateConverter' => App\Utils\DateConverter::class,
+            'AttendanceStatusConst' => App\Constants\AttendanceStatusConst::class,
         ])
         ->toArray(),
 ];
