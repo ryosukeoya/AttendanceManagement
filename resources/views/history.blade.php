@@ -4,3 +4,4 @@
         <x-backLink />
     </x-primary-content-wrapper>
 </x-app-layout>
+<x-modal />
