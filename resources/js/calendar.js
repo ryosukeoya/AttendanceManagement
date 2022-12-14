@@ -1,20 +1,19 @@
+import { Calendar } from '@fullcalendar/core'
+import dayGridPlugin from '@fullcalendar/daygrid'
+import timeGridPlugin from '@fullcalendar/timegrid'
+import listPlugin from '@fullcalendar/list'
+import interactionPlugin from '@fullcalendar/interaction'
+
 /**
  * TODO プリント勤務
  * @see https://preview.keenthemes.com/good/documentation/general/fullcalendar/background-events.html
  */
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', async function () {
     const calendarEl = document.getElementById('calendar')
-    const calendar = new FullCalendar.Calendar(calendarEl, {
+    const calendar = new Calendar(calendarEl, {
+        plugins: [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin],
         initialView: 'dayGridMonth',
         selectable: true,
-        events: [
-            {
-                title: '勤務',
-                start: '2022-10-24T13:00:00',
-                end: '2022-10-24T15:00:00',
-                constraint: 'businessHours'
-            }
-        ],
         dateClick: function (info) {
             const modalBackdrop = document.getElementById('modalBackdrop')
 
@@ -23,4 +22,23 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     })
     calendar.render()
+
+    const calendarResources = await window
+        .fetch('api_calendar', { method: 'GET' })
+        .then((res) => {
+            return res.json()
+        })
+        .then((result) => {
+            return result
+        })
+        .catch((error) => {
+            console.error(error)
+        })
+
+    calendar.addEvent({
+        title: '肉体労働',
+        start: '2022-12-15T13:00:00',
+        end: '2022-12-15T15:00:00',
+        constraint: 'businessHours'
+    })
 })
