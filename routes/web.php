@@ -39,12 +39,11 @@ Route::middleware(['auth'])->group(function () {
     );
 
     // API
-    Route::get('api_attendance_record', [AttendanceRecordApiController::class, 'getAttendanceStatusOfJson'])->name(
-        'api_attendance_record'
+    Route::get('api_attendance_record/me/today_status', [AttendanceRecordApiController::class, 'getAttendanceStatusOfJson'])->name(
+        'api_attendance_record.me.today_status'
     );
-    // TODO Rename api_calendar
-    Route::get('api_calendar', [AttendanceRecordApiController::class, 'getCalendarResourcesOfJson'])->name(
-        'api_calendar'
+    Route::get('api_attendance_record/me/all', [AttendanceRecordApiController::class, 'getCalendarResourcesOfJson'])->name(
+        'api_calendar.me.all'
     );
 });
 
