@@ -11,14 +11,10 @@
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
 
-    {{-- TDDO Refactor --}}
-    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
-    <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@5.11.3/main.global.min.js'></script>
-    <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@5.11.3/main.global.min.js'></script>
     {{-- Refactor --}}
     <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/menuState.js', 'resources/js/calendar.js','resources/js/modal.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/menuState.js',
+    'resources/js/calendar.js','resources/js/modal.js'])
 </head>
 
 <body class="font-sans antialiased">
