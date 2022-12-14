@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     })
     calendar.render()
 
-    const calendarResources = await window
+    const result = await window
         .fetch('api_calendar', { method: 'GET' })
         .then((res) => {
             return res.json()
@@ -35,10 +35,15 @@ document.addEventListener('DOMContentLoaded', async function () {
             console.error(error)
         })
 
-    calendar.addEvent({
-        title: '肉体労働',
-        start: '2022-12-15T13:00:00',
-        end: '2022-12-15T15:00:00',
-        constraint: 'businessHours'
+    const eventSources = []
+    result.calendarResources.forEach((resource) => {
+        eventSources.push({
+            title: '勤務',
+            start: resource.start_time,
+            end: resource.end_time,
+            constraint: 'businessHours'
+        })
     })
+
+    calendar.addEventSource(eventSources)
 })
