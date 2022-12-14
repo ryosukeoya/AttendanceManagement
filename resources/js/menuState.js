@@ -3,7 +3,7 @@
 window.onload = () => {
     async function changeMenuStateAccAttendanceStatus() {
         await window
-            .fetch('api_attendance_record', {
+            .fetch('api_attendance_record/me/today_status', {
                 method: 'GET'
             })
             .then((res) => {
