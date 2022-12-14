@@ -14,7 +14,7 @@ class AttendanceRecordController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
     public function index()
     {
@@ -24,7 +24,7 @@ class AttendanceRecordController extends Controller
     /**
      * Display the start page
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
     public function start()
     {
@@ -43,7 +43,7 @@ class AttendanceRecordController extends Controller
     /**
      * Display the end page
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
     public function end()
     {
@@ -65,8 +65,8 @@ class AttendanceRecordController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  App\Http\Requests\AttendanceRecordRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(AttendanceRecordRequest $request)
     {
@@ -79,9 +79,9 @@ class AttendanceRecordController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function edit($id)
+    public function edit()
     {
         return view('end');
     }
@@ -89,8 +89,8 @@ class AttendanceRecordController extends Controller
     /**
      * Updates the record of the most recent start of the day in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  App\Http\Requests\AttendanceRecordRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(AttendanceRecordRequest $request)
     {
@@ -115,7 +115,7 @@ class AttendanceRecordController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {
