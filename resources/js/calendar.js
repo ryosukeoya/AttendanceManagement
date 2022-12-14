@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         plugins: [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin],
         initialView: 'dayGridMonth',
         selectable: true,
-        dateClick: function (info) {
+        eventClick: function (info) {
             const modalBackdrop = document.getElementById('modalBackdrop')
 
             modalBackdrop.classList.remove('hidden')
