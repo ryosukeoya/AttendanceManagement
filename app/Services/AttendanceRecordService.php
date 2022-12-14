@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\AttendanceRecord;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 
 class AttendanceRecordService
 {
@@ -15,6 +16,13 @@ class AttendanceRecordService
     final public static function canRegisterForEndOfWork(int $attendanceStatus): bool
     {
         return $attendanceStatus == \AttendanceStatusConst::LIST['STARTED']['STATUS'];
+    }
+
+    final public function getAllAttendanceRecords(User $user): Collection
+    {
+        $allAttendanceRecords = $user->attendanceRecords()->get();
+
+        return $allAttendanceRecords;
     }
 
     final public function getAttendanceStatus(User $user): int

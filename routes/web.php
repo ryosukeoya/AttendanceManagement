@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TopController;
+use App\Http\Controllers\Api\AttendanceRecordApiController;
 use App\Http\Controllers\AttendanceRecordController;
 use App\Http\Middleware\AssignRequestId;
 
@@ -18,7 +19,9 @@ use App\Http\Middleware\AssignRequestId;
 
 Route::middleware(['auth'])->group(function () {
     // TOP
-    Route::get('/', [TopController::class, 'index'])->name('home')->middleware(AssignRequestId::class);
+    Route::get('/', [TopController::class, 'index'])
+        ->name('home')
+        ->middleware(AssignRequestId::class);
 
     // Attendance Record
     Route::resource('attendance_record', AttendanceRecordController::class)->only([
@@ -27,15 +30,21 @@ Route::middleware(['auth'])->group(function () {
         'store',
         'destroy',
     ]);
-    Route::get('attendance_record/start', [AttendanceRecordController::class, 'start'])->name('attendance_record.start');
+    Route::get('attendance_record/start', [AttendanceRecordController::class, 'start'])->name(
+        'attendance_record.start'
+    );
     Route::get('attendance_record/end', [AttendanceRecordController::class, 'end'])->name('attendance_record.end');
     Route::patch('attendance_record/update', [AttendanceRecordController::class, 'update'])->name(
         'attendance_record.update'
     );
 
     // API
-    Route::get('api_attendance_record', [TopController::class, 'getAttendanceStatusOfJson'])->name(
+    Route::get('api_attendance_record', [AttendanceRecordApiController::class, 'getAttendanceStatusOfJson'])->name(
         'api_attendance_record'
+    );
+    // TODO Rename api_calendar
+    Route::get('api_calendar', [AttendanceRecordApiController::class, 'getCalendarResourcesOfJson'])->name(
+        'api_calendar'
     );
 });
 
