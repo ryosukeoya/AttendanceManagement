@@ -18,7 +18,7 @@
 </head>
 
 <body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100">
+    <div class="bg-gray-100">
         @include('layouts.navigation')
 
         <!-- Page Content -->
@@ -26,6 +26,7 @@
             {{ $slot }}
         </main>
     </div>
+    <x-modal />
 </body>
 
 </html>
