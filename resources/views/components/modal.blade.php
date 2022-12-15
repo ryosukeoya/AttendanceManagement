@@ -3,6 +3,6 @@
     <div id="modalContent" class="absolute bg-white inset-0 m-auto w-96 h-96 p-7 rounded-lg overflow-y-scroll animate-appear">
         <p id="workingStartTime"></p>
         <p id="workingEndTime"></p>
-        <p id="WorkingTotalTime"></p>
+        <p id="WorkingTotalTime" class="pt-3 font-semibold"></p>
     </div>
 </div>
