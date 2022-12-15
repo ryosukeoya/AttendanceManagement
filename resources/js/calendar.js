@@ -32,30 +32,32 @@ document.addEventListener('DOMContentLoaded', async function () {
             modalBackdrop.classList.remove('hidden')
             modalBackdrop.classList.add('block')
 
-            const start = document.getElementById('start')
-            const end = document.getElementById('end')
-            const total = document.getElementById('total')
+            const startElm = document.getElementById('start')
+            const endElm = document.getElementById('end')
+            const totalElm = document.getElementById('total')
 
-            // startがJSTのタイムゾーンの時間分加算されるので、理由わからず
-            // timeZone: 'local'、API 2022-12-15T00:00:00.000000Z(UTC表示)、calendar 12月15日9時表示(JTC時間)、eventClick(info) Thu Dec 15 2022 18:00:00 GMT+0900 (日本標準時)←なぜ？
-            const localStartDate = subTimezoneDiff(info.event._instance.range.start)
-            const startDate = format(localStartDate, 'yyyy年MM月dd日 HH:mm:ss')
-            start.textContent = `勤務開始時間 : ${startDate}`
+            const startDate = info.event._instance.range.start
+            const endDate = info.event._instance.range.end
 
-            const localEndDate = subTimezoneDiff(info.event._instance.range.end)
-            const endDate = format(localEndDate, 'yyyy年MM月dd日 HH:mm:ss')
-            end.textContent = `勤務終了時間 : ${endDate}`
+            // startDateがJSTのタイムゾーンの時間分加算されるのでsubTimezoneDiffでタイムゾーン分減算した、理由わからず
+            // timeZone: 'local'、API 2022-12-15T00:00:00.000000Z(UTC表示)、calendar 12月15日9時表示(JST時間)、eventClick(info) Thu Dec 15 2022 18:00:00 GMT+0900 (日本標準時)←なぜ？
+            const localStartDate = subTimezoneDiff(startDate)
+            const formatedStartDate = format(localStartDate, 'yyyy年MM月dd日 HH:mm:ss')
+            startElm.textContent = `勤務開始時間 : ${formatedStartDate}`
 
-            // TODO Refactor
-            // TODO　日付跨ぎ
-            const totalMilliSeconds = info.event._instance.range.end - info.event._instance.range.start
-            console.log(totalMilliSeconds)
+            const localEndDate = subTimezoneDiff(endDate)
+            const formatedEndDate = format(localEndDate, 'yyyy年MM月dd日 HH:mm:ss')
+            endElm.textContent = `勤務終了時間 : ${formatedEndDate}`
+
+            const totalMilliSeconds = endDate - startDate
             const totalSeconds = totalMilliSeconds / 1000
-            console.log(totalSeconds)
-            const totalHours = Math.floor(totalSeconds / 3600)
-            const totalMinutes = (totalSeconds % 3600) / 60
 
-            total.textContent = `合計勤務時間 : ${totalHours}時間${totalMinutes}分`
+            const secondsPerHour = 3600
+            const minute = 60
+            const totalHours = Math.floor(totalSeconds / secondsPerHour)
+            const totalMinutes = (totalSeconds % secondsPerHour) / minute
+
+            totalElm.textContent = `合計勤務時間 : ${totalHours}時間${totalMinutes}分`
         }
     })
     calendar.render()
