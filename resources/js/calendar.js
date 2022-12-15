@@ -32,9 +32,9 @@ document.addEventListener('DOMContentLoaded', async function () {
             modalBackdrop.classList.remove('hidden')
             modalBackdrop.classList.add('block')
 
-            const startElm = document.getElementById('start')
-            const endElm = document.getElementById('end')
-            const totalElm = document.getElementById('total')
+            const startElm = document.getElementById('workingStartTime')
+            const endElm = document.getElementById('workingEndTime')
+            const totalElm = document.getElementById('WorkingTotalTime')
 
             const startDate = info.event._instance.range.start
             const endDate = info.event._instance.range.end
