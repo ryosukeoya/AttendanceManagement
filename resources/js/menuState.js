@@ -1,5 +1,3 @@
-'use strict'
-
 window.onload = () => {
     async function changeMenuStateAccAttendanceStatus() {
         await window
