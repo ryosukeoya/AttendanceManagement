@@ -5,7 +5,13 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import listPlugin from '@fullcalendar/list'
 import interactionPlugin from '@fullcalendar/interaction'
-import { getHours, getMinutes } from 'date-fns'
+import { format, subMinutes } from 'date-fns'
+
+const subTimezoneDiff = (date) => {
+    const timezoneOffset = date.getTimezoneOffset()
+    const subedDate = subMinutes(date, -timezoneOffset)
+    return subedDate
+}
 
 /**
  * TODO プリント勤務
@@ -17,6 +23,9 @@ document.addEventListener('DOMContentLoaded', async function () {
         plugins: [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin],
         initialView: 'dayGridMonth',
         selectable: true,
+        businessHours: true,
+        locale: 'ja',
+        timeZone: 'local',
         eventClick: function (info) {
             const modalBackdrop = document.getElementById('modalBackdrop')
 
@@ -27,13 +36,15 @@ document.addEventListener('DOMContentLoaded', async function () {
             const end = document.getElementById('end')
             const total = document.getElementById('total')
 
-            const startHours = getHours(info.event._instance.range.start)
-            const startMinutes = getMinutes(info.event._instance.range.start)
-            start.textContent = `勤務開始時間 : ${startHours}時${startMinutes}分`
+            // startがJSTのタイムゾーンの時間分加算されるので、理由わからず
+            // timeZone: 'local'、API 2022-12-15T00:00:00.000000Z(UTC表示)、calendar 12月15日9時表示(JTC時間)、eventClick(info) Thu Dec 15 2022 18:00:00 GMT+0900 (日本標準時)←なぜ？
+            const localStartDate = subTimezoneDiff(info.event._instance.range.start)
+            const startDate = format(localStartDate, 'yyyy年MM月dd日 HH:mm:ss')
+            start.textContent = `勤務開始時間 : ${startDate}`
 
-            const endHours = getHours(info.event._instance.range.end)
-            const endMinutes = getMinutes(info.event._instance.range.end)
-            end.textContent = `勤務終了時間 : ${endHours}時${endMinutes}分`
+            const localEndDate = subTimezoneDiff(info.event._instance.range.end)
+            const endDate = format(localEndDate, 'yyyy年MM月dd日 HH:mm:ss')
+            end.textContent = `勤務終了時間 : ${endDate}`
 
             // TODO Refactor
             // TODO　日付跨ぎ
