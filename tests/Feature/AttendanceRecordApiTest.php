@@ -7,12 +7,14 @@ use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-class TopControllerTest extends TestCase
+class AttendanceRecordApiTest extends TestCase
 {
     use DatabaseMigrations;
 
     // TODO Refactor
     private const TestingSeederClassName = 'TestingDatabaseSeeder';
+
+    // TODO Rename Method Name!! APIの名前になってるの変える
 
     /**
      * 未登録時のユーザーがapi_attendance_recordを叩いた時のレスポンスは正しいか
@@ -24,7 +26,7 @@ class TopControllerTest extends TestCase
         $this->seed(self::TestingSeederClassName);
 
         $attendanceUnregisteredUser = User::find(1);
-        $res = $this->actingAs($attendanceUnregisteredUser)->get(route('api_attendance_record'));
+        $res = $this->actingAs($attendanceUnregisteredUser)->get(route('api_attendance_record.me.today_status'));
         $res->assertOk()
             ->assertJsonCount(1)
             ->assertJsonFragment(['attendanceStatus' => \AttendanceStatusConst::LIST['UNREGISTERED']['STATUS']]);
@@ -40,7 +42,7 @@ class TopControllerTest extends TestCase
         $this->seed(self::TestingSeederClassName);
 
         $startedUser = User::find(2);
-        $res = $this->actingAs($startedUser)->get(route('api_attendance_record'));
+        $res = $this->actingAs($startedUser)->get(route('api_attendance_record.me.today_status'));
         $res->assertOk()
             ->assertJsonCount(1)
             ->assertJsonFragment(['attendanceStatus' => \AttendanceStatusConst::LIST['STARTED']['STATUS']]);
@@ -56,7 +58,7 @@ class TopControllerTest extends TestCase
         $this->seed(self::TestingSeederClassName);
 
         $endedUser = User::find(3);
-        $res = $this->actingAs($endedUser)->get(route('api_attendance_record'));
+        $res = $this->actingAs($endedUser)->get(route('api_attendance_record.me.today_status'));
         $res->assertOk()
             ->assertJsonCount(1)
             ->assertJsonFragment(['attendanceStatus' => \AttendanceStatusConst::LIST['ENDED']['STATUS']]);
@@ -72,9 +74,21 @@ class TopControllerTest extends TestCase
         $this->seed(self::TestingSeederClassName);
 
         $closingReportOnlyUser = User::find(4);
-        $res = $this->actingAs($closingReportOnlyUser)->get(route('api_attendance_record'));
+        $res = $this->actingAs($closingReportOnlyUser)->get(route('api_attendance_record.me.today_status'));
         $res->assertOk()
             ->assertJsonCount(1)
             ->assertJsonFragment(['attendanceStatus' => \AttendanceStatusConst::LIST['ILLEGAL']['STATUS']]);
+    }
+
+    /**
+     * @return void
+     */
+    public function test_calendar_resources()
+    {
+        $this->seed(self::TestingSeederClassName);
+
+        $closingReportOnlyUser = User::find(4);
+        $res = $this->actingAs($closingReportOnlyUser)->get(route('api_calendar.me.all'));
+        $res->assertOk()->assertJsonCount(1);
     }
 }
