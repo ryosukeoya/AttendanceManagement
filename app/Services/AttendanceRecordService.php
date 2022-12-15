@@ -56,6 +56,7 @@ class AttendanceRecordService
             } elseif ($todayStartedRecordCounts >= 1 && $todayEndedRecordCounts == 0) {
                 return \AttendanceStatusConst::LIST['STARTED']['STATUS'];
             } elseif ($todayStartedRecordCounts == 0 && $todayEndedRecordCounts >= 1) {
+                /** ※日付跨ぎの勤務で不正登録になる */
                 throw new \RecordException('未始業かつ終業済み登録');
             } elseif ($todayStartedRecordCounts >= 1 && $todayEndedRecordCounts >= 1) {
                 return \AttendanceStatusConst::LIST['ENDED']['STATUS'];
