@@ -26,6 +26,9 @@ document.addEventListener('DOMContentLoaded', async function () {
         businessHours: true,
         locale: 'ja',
         timeZone: 'local',
+        dayCellContent: function (e) {
+            return e.dayNumberText = e.dayNumberText.replace('日', '')
+        },
         eventClick: function (info) {
             const modalBackdrop = document.getElementById('modalBackdrop')
 
