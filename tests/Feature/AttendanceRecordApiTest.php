@@ -29,7 +29,7 @@ class AttendanceRecordApiTest extends TestCase
         $res = $this->actingAs($attendanceUnregisteredUser)->get(route('api_attendance_record.me.today_status'));
         $res->assertOk()
             ->assertJsonCount(1)
-            ->assertJsonFragment(['attendanceStatus' => \AttendanceStatusConst::LIST['UNREGISTERED']['STATUS']]);
+            ->assertJsonFragment(['attendanceStatus' => 0]);
     }
 
     /**
@@ -45,7 +45,7 @@ class AttendanceRecordApiTest extends TestCase
         $res = $this->actingAs($startedUser)->get(route('api_attendance_record.me.today_status'));
         $res->assertOk()
             ->assertJsonCount(1)
-            ->assertJsonFragment(['attendanceStatus' => \AttendanceStatusConst::LIST['STARTED']['STATUS']]);
+            ->assertJsonFragment(['attendanceStatus' => 1]);
     }
 
     /**
@@ -61,7 +61,7 @@ class AttendanceRecordApiTest extends TestCase
         $res = $this->actingAs($endedUser)->get(route('api_attendance_record.me.today_status'));
         $res->assertOk()
             ->assertJsonCount(1)
-            ->assertJsonFragment(['attendanceStatus' => \AttendanceStatusConst::LIST['ENDED']['STATUS']]);
+            ->assertJsonFragment(['attendanceStatus' => 2]);
     }
 
     /**
@@ -77,7 +77,7 @@ class AttendanceRecordApiTest extends TestCase
         $res = $this->actingAs($closingReportOnlyUser)->get(route('api_attendance_record.me.today_status'));
         $res->assertOk()
             ->assertJsonCount(1)
-            ->assertJsonFragment(['attendanceStatus' => \AttendanceStatusConst::LIST['ILLEGAL']['STATUS']]);
+            ->assertJsonFragment(['attendanceStatus' => 3]);
     }
 
     /**
