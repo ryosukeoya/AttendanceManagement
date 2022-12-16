@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TopController;
 use App\Http\Controllers\Api\AttendanceRecordApiController;
 use App\Http\Controllers\AttendanceRecordController;
-use App\Http\Middleware\AssignRequestId;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,9 +18,7 @@ use App\Http\Middleware\AssignRequestId;
 
 Route::middleware(['auth'])->group(function () {
     // TOP
-    Route::get('/', [TopController::class, 'index'])
-        ->name('home')
-        ->middleware(AssignRequestId::class);
+    Route::get('/', [TopController::class, 'index'])->name('home');
 
     // Attendance Record
     Route::resource('attendance_record', AttendanceRecordController::class)->only([
@@ -39,12 +36,14 @@ Route::middleware(['auth'])->group(function () {
     );
 
     // API
-    Route::get('api_attendance_record/me/today_status', [AttendanceRecordApiController::class, 'getAttendanceStatusOfJson'])->name(
-        'api_attendance_record.me.today_status'
-    );
-    Route::get('api_attendance_record/me/all', [AttendanceRecordApiController::class, 'getCalendarResourcesOfJson'])->name(
-        'api_calendar.me.all'
-    );
+    Route::get('api_attendance_record/me/today_status', [
+        AttendanceRecordApiController::class,
+        'getAttendanceStatusOfJson',
+    ])->name('api_attendance_record.me.today_status');
+    Route::get('api_attendance_record/me/all', [
+        AttendanceRecordApiController::class,
+        'getCalendarResourcesOfJson',
+    ])->name('api_calendar.me.all');
 });
 
 require __DIR__ . '/auth.php';
