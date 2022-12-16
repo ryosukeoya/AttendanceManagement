@@ -82,7 +82,7 @@ const createModalContent = (startDate, endDate) => {
 
     // BACKGROUND
     // startDateがJSTのタイムゾーンの時間分加算されるので、subTimezoneDiffでタイムゾーン分減算した。理由わからず
-    // 再現手順　
+    // 再現手順　https://github.com/ryosuke1256/AttendanceManagement/issues/26
     const localStartDate = subTimezoneDiff(startDate)
     const formatedStartDate = format(localStartDate, 'yyyy年MM月dd日 HH:mm:ss')
     startElm.textContent = `勤務開始時間 : ${formatedStartDate}`
