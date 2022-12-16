@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Entities\TodayAttendanceRecord;
+use App\AttendanceStatusFactory;
+use App\Queries\AttendanceRecordQuery;
 use App\Http\Requests\AttendanceRecordRequest;
-use App\Services\AttendanceRecordService;
 use App\Models\AttendanceRecord;
 
 class AttendanceRecordController extends Controller
@@ -28,12 +29,9 @@ class AttendanceRecordController extends Controller
      */
     public function start()
     {
-        $user = Auth::user();
+        $attendanceStatus = AttendanceStatusFactory::create();
 
-        $attendanceRecordService = new AttendanceRecordService();
-        $attendanceStatus = $attendanceRecordService->getAttendanceStatus($user);
-
-        if (!$attendanceRecordService->canRegisterToStartWork($attendanceStatus)) {
+        if (!$attendanceStatus->canRegisterToStartWork()) {
             return view('started');
         }
 
@@ -49,14 +47,13 @@ class AttendanceRecordController extends Controller
     {
         $user = Auth::user();
 
-        $attendanceRecordService = new AttendanceRecordService();
-        $attendanceStatus = $attendanceRecordService->getAttendanceStatus($user);
+        $attendanceStatus = AttendanceStatusFactory::create();
 
-        if (!$attendanceRecordService->canRegisterForEndOfWork($attendanceStatus)) {
+        if (!$attendanceStatus->canRegisterForEndOfWork()) {
             return view('ended');
         }
 
-        $todayStartedRecord = $attendanceRecordService->getTodayStartedRecord($user);
+        $todayStartedRecord = AttendanceRecordQuery::getTodayStartedRecord($user);
         $startTimeStr = $todayStartedRecord->start_time->toTimeString();
 
         return view('end', ['startTime' => $startTimeStr]);
@@ -96,17 +93,11 @@ class AttendanceRecordController extends Controller
     {
         $user = \Auth::user();
 
-        $todayStartedRecord = AttendanceRecordService::getTodayStartedRecord($user);
+        $todayStartedRecord = AttendanceRecordQuery::getTodayStartedRecord($user);
         $endTime = new Carbon($request->time);
-
-        if ($endTime <= $todayStartedRecord->start_time) {
-            \Log::error('終了時刻が開始時刻以前の値で登録されています : ', [
-                'user_id' => $user->id,
-            ]);
-        }
-
+        $todayAttendanceRecord = new TodayAttendanceRecord($todayStartedRecord->start_time, $endTime);
         $todayStartedRecord->update([
-            'end_time' => $request->time,
+            'end_time' => $todayAttendanceRecord->getEndTime(),
         ]);
         return redirect()->route('home');
     }
