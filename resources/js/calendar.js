@@ -80,9 +80,9 @@ const createModalContent = (startDate, endDate) => {
     const endElm = document.getElementById('workingEndTime')
     const totalElm = document.getElementById('WorkingTotalTime')
 
-    // background
+    // BACKGROUND
     // startDateがJSTのタイムゾーンの時間分加算されるので、subTimezoneDiffでタイムゾーン分減算した。理由わからず
-    // timeZone: 'local'、API 2022-12-15T00:00:00.000000Z(UTC表示)、calendar 12月15日9時表示(JST時間)、eventClick(info) Thu Dec 15 2022 18:00:00 GMT+0900 (日本標準時)←?
+    // 再現手順　
     const localStartDate = subTimezoneDiff(startDate)
     const formatedStartDate = format(localStartDate, 'yyyy年MM月dd日 HH:mm:ss')
     startElm.textContent = `勤務開始時間 : ${formatedStartDate}`
