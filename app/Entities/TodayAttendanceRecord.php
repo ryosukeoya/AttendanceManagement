@@ -12,7 +12,6 @@ class TodayAttendanceRecord
 
     public function __construct(Carbon $starTime, Carbon $endTime)
     {
-        // TODO mysql check制約
         if ($endTime <= $starTime) {
             $user = \Auth::user();
             \Log::error('ABNORMAL_RECORD : 終了時刻が開始時刻以前の値です', [
