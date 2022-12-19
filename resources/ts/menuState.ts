@@ -1,16 +1,20 @@
+type AttendanceStatus = number
+
+type AttendanceStatusApi = { attendanceStatus: AttendanceStatus }
+
 window.onload = () => {
     async function changeMenuStateAccAttendanceStatus() {
         await window
             .fetch('api_attendance_record/me/today_status', {
                 method: 'GET'
             })
-            .then((res) => {
+            .then((res: Response) => {
                 if (!res.ok) {
                     console.error(res.status, 'server error')
                 }
                 return res.json()
             })
-            .then((result) => {
+            .then((result: AttendanceStatusApi) => {
                 if (result.attendanceStatus == 0) {
                     const workingEndMenu = document.getElementById('workingEnd')
 
@@ -38,8 +42,10 @@ window.onload = () => {
                 }
                 return result
             })
-            .catch((error) => {
-                console.error(error)
+            .catch((error: unknown) => {
+                if (error instanceof Error) {
+                    console.error(error.message)
+                }
             })
     }
     changeMenuStateAccAttendanceStatus()

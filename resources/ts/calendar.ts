@@ -1,9 +1,22 @@
-import { Calendar, EventClickArg } from '@fullcalendar/core'
+import { Calendar, DayCellContentArg, EventClickArg } from '@fullcalendar/core'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import listPlugin from '@fullcalendar/list'
 import interactionPlugin from '@fullcalendar/interaction'
-import { format, subMinutes } from 'date-fns'
+import { differenceInMinutes, format, subMinutes } from 'date-fns'
+
+type CalendarResource = {
+    title: string
+    start_time: Date
+    end_time: Date
+    total_minutes: number
+}
+
+type CalendarResources = Array<CalendarResource>
+
+type CalendarResourcesApi = {
+    calendarResources: CalendarResources
+}
 
 /**
  * TODO プリント勤務
@@ -19,8 +32,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         businessHours: true,
         locale: 'ja',
         timeZone: 'local',
-
-        dayCellContent: function (e) {
+        dayCellContent: function (e: DayCellContentArg) {
             return (e.dayNumberText = e.dayNumberText.replace('日', ''))
         },
         eventClick: function (info: EventClickArg) {
@@ -34,7 +46,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     calendar.render()
 
     try {
-        const result = await window
+        const result: CalendarResourcesApi = await window
             .fetch('api_attendance_record/me/all', { method: 'GET' })
             .then((res) => {
                 if (!res.ok) {
@@ -49,13 +61,13 @@ document.addEventListener('DOMContentLoaded', async function () {
                 console.error(error)
             })
 
-        const eventSources = result.calendarResources.map((resource: any) => {
+        const eventSources = result.calendarResources.map((resource: CalendarResource) => {
             // @see https://fullcalendar.io/docs/event-object
             return {
                 title: '勤務',
                 start: resource.start_time,
                 end: resource.end_time,
-                total_minutes: resource.total_time,
+                total_minutes: resource.total_minutes,
                 constraint: 'businessHours',
                 // BACK_GROUND 終了時間未登録のものは見せない
                 display: !resource.end_time ? 'none' : 'auto'
@@ -63,8 +75,10 @@ document.addEventListener('DOMContentLoaded', async function () {
         })
 
         calendar.addEventSource(eventSources)
-    } catch (error) {
-        console.error(error)
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+            console.error(error.message)
+        }
     }
 })
 
@@ -103,14 +117,11 @@ const createModalContent = (startDate?: Date, endDate?: Date) => {
     }
 
     if (totalElm && startDate && endDate) {
-        // @ts-ignore
-        const totalMilliSeconds = endDate - startDate
-        const totalSeconds = totalMilliSeconds / 1000
+        const diffMinutes = differenceInMinutes(endDate, startDate)
 
-        const secondsPerHour = 3600
-        const minute = 60
-        const totalHours = Math.floor(totalSeconds / secondsPerHour)
-        const totalMinutes = (totalSeconds % secondsPerHour) / minute
+        const minutesInHour = 60
+        const totalHours = Math.floor(diffMinutes / minutesInHour)
+        const totalMinutes = diffMinutes % minutesInHour 
 
         totalElm.textContent = `合計勤務時間 : ${totalHours}時間${totalMinutes}分`
     }
