@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "target": "ES2015",
+        "module": "esnext",
+        "moduleResolution": "node",
+        "baseUrl": "./",
+        "strict": true, // Enable strict type-checking options
+        "skipLibCheck": true, // Skip type checking of declaration files
+        "noImplicitAny": false, // Bypass raising errors on `any` type
+        "incremental": true,
+        "noEmit": true,
+        "allowJs": true
+    },
+    "include": ["resources/ts/**/*"] // Frontend paths pattern
+}

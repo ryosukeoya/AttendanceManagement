@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import './bootstrap'
 
 import Alpine from 'alpinejs'
