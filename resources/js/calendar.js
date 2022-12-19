@@ -48,11 +48,15 @@ document.addEventListener('DOMContentLoaded', async function () {
             })
 
         const eventSources = result.calendarResources.map((resource) => {
+            // @see https://fullcalendar.io/docs/event-object
             return {
                 title: '勤務',
                 start: resource.start_time,
                 end: resource.end_time,
-                constraint: 'businessHours'
+                total_minutes: resource.total_time,
+                constraint: 'businessHours',
+                // BACK_GROUND 終了時間未登録のものは見せない
+                display: !resource.end_time ? 'none' : 'auto'
             }
         })
 
