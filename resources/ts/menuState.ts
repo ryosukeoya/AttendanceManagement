@@ -14,21 +14,27 @@ window.onload = () => {
                 if (result.attendanceStatus == 0) {
                     const workingEndMenu = document.getElementById('workingEnd')
 
-                    workingEndMenu.classList.add('unselectable_menu')
-                    workingEndMenu.firstElementChild.href = 'javascript:void(0)'
+                    if (workingEndMenu) {
+                        workingEndMenu.classList.add('unselectable_menu')
+                        workingEndMenu.firstElementChild?.setAttribute('href', 'javascript:void(0)')
+                    }
                 } else if (result.attendanceStatus == 1) {
                     const workingStartMenu = document.getElementById('workingStart')
 
-                    workingStartMenu.classList.add('unselectable_menu')
-                    workingStartMenu.firstElementChild.href = 'javascript:void(0)'
+                    if (workingStartMenu) {
+                        workingStartMenu?.classList.add('unselectable_menu')
+                        workingStartMenu?.firstElementChild?.setAttribute('href', 'javascript:void(0)')
+                    }
                 } else if (result.attendanceStatus == 2) {
                     const workingStartMenu = document.getElementById('workingStart')
                     const workingEndMenu = document.getElementById('workingEnd')
 
-                    workingStartMenu.classList.add('unselectable_menu')
-                    workingStartMenu.firstElementChild.href = 'javascript:void(0)'
-                    workingEndMenu.classList.add('unselectable_menu')
-                    workingEndMenu.firstElementChild.href = 'javascript:void(0)'
+                    if (workingStartMenu && workingEndMenu) {
+                        workingStartMenu?.classList.add('unselectable_menu')
+                        workingStartMenu?.firstElementChild?.setAttribute('href', 'javascript:void(0)')
+                        workingEndMenu?.classList.add('unselectable_menu')
+                        workingEndMenu?.firstElementChild?.setAttribute('href', 'javascript:void(0)')
+                    }
                 }
                 return result
             })
