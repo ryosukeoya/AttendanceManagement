@@ -1,6 +1,6 @@
 ## About
 
--   勤怠管理アプリです。カレンダーから勤務時間の確認もできます🗽
+-   勤怠管理アプリです。カレンダーから勤務時間の確認もできます⛱
 
 ## Usage
 
@@ -13,7 +13,7 @@
 ```
 
 ```
-  php artisan serve
+ php artisan serve
 ```
 
 ## Technology
