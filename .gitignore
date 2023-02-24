@@ -14,5 +14,6 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+tsconfig.tsbuildinfo
 
 _ide_helper.php
