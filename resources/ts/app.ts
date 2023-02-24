@@ -1,6 +1,10 @@
 // @ts-nocheck
 
 import './bootstrap'
+import './backLink'
+import './calendar'
+import './menuState'
+import './modal'
 
 import Alpine from 'alpinejs'
 

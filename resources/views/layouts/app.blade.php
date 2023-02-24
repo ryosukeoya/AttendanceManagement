@@ -13,8 +13,7 @@
 
     {{-- Refactor --}}
     <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/ts/app.ts', 'resources/ts/menuState.ts',
-    'resources/ts/calendar.ts','resources/ts/modal.ts'])
+    @vite(['resources/css/app.css', 'resources/ts/app.ts'])
 </head>
 
 <body class="font-sans antialiased">
