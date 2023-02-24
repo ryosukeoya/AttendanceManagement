@@ -11,9 +11,10 @@
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
 
-    {{-- Refactor --}}
+    {{-- TODO Refactor --}}
     <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/ts/app.ts'])
+    @vite(['resources/css/app.css', 'resources/ts/app.ts', 'resources/ts/menuState.ts',
+    'resources/ts/calendar.ts','resources/ts/modal.ts'])
 </head>
 
 <body class="font-sans antialiased">
