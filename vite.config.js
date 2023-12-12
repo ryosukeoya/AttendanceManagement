@@ -8,9 +8,7 @@ export default defineConfig({
             // TODO
             input: [
                 'resources/css/app.css',
-                'resources/ts/error.ts',
                 'resources/ts/app.ts',
-                'resources/ts/backLink.ts',
                 'resources/ts/calendar.ts',
                 'resources/ts/menuState.ts',
                 'resources/ts/modal.ts'
