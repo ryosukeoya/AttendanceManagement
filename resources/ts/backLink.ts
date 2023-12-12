@@ -1,9 +1,3 @@
-const backLink = document.getElementById('backLink')
+const backLink = document.getElementById('backLink')!
 
-backLink?.addEventListener(
-    'click',
-    function () {
-        window.history.back()
-    },
-    false
-)
+backLink.addEventListener('click', window.history.back, false)

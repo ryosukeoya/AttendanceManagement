@@ -1,9 +1,3 @@
-const modalBackdrop = document.getElementById('modalBackdrop')
+const backDrop = document.getElementById('modalBackdrop')!
 
-window.addEventListener(
-    'click',
-    function () {
-        modalBackdrop?.classList.add('hidden')
-    },
-    true
-)
+window.addEventListener('click', () => backDrop.classList.add('hidden'), true)
